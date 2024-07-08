@@ -5,18 +5,18 @@ interface CardType {
     id: number;
     name: string;
     description: string;
-    imageUrl: string;
+    image: string;
     price:number;
 }
 
-const Card = ({ name , id , description , imageUrl , price}:CardType) => {
+const Card = ({ name , id , description , image , price}:CardType) => {
   return (
     <Link href={`/products/${id}`}>
     <div className="max-w-lg bg-gray-953 rounded-sm overflow-hidden h-full flex flex-col justify-between">
       <div>
         <div className="relative h-96  bg-center ">
           <Image
-            src={imageUrl}
+          src={image}
             alt={name}
             fill={true}
             className="rounded-t"

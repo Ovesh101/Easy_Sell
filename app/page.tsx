@@ -1,16 +1,23 @@
 import Card from "@/components/Card/Card"
+import { createClient } from "@/supabase/supabase"
 
 
-const Home = () => {
-  const products = [
-    {
-      id:0,
-      name:"Activa",
-      price: 1000,
-      imageUrl:"/Images/3.jpg",
-      description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod libero eu tell"
-    }
-  ]
+export const revalidate = 0;
+const Home = async () => {
+  const supabase = createClient();
+  // const products = [
+  //   {
+  //     id:0,
+  //     name:"Activa",
+  //     price: 1000,
+  //     imageUrl:"/Images/3.jpg",
+  //     description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod libero eu tell"
+  //   }
+  // ]
+  const { data:products, error } = await supabase.from('easy_sell').select()
+
+  console.log("data from supabase" , products);
+  
   return (
     <main className="min-h-screen max-w-[100rem] mx-auto">
       <div className="px-12 pt-12 pb-20">
@@ -22,7 +29,7 @@ const Home = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2 xl:gap-12">
             {products &&
               products.map((item, idx) => (
-                <Card key={`${item.name}-${idx}`} {...item} />
+                <Card key={`${item.name}-${idx}`} {...item} image={`${process.env.SUPABASE_URL}/storage/v1/object/public/Storage/${item.image}`} />
               ))}
           </div>
         </div>
@@ -31,7 +38,7 @@ const Home = () => {
         {products && products.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {products.map((item, idx) => (
-              <Card  key={`${item.name}-${idx}`} {...item} />
+              <Card  key={`${item.name}-${idx}`} {...item} image={`${process.env.SUPABASE_URL}/storage/v1/object/public/Storage/${item.image}`} />
             ))}
           </div>
         ) : (
